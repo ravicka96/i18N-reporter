@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Automation Report</title>
+    <link rel="stylesheet" href="src/test/resources/CSS/report-css.css">
+</head>
+<body>
+<div class="header-container">
+    <div class="left-header-div">
+        <h1 th:text=${reportHeader}></h1>
+    </div>
+    <div class="right-header-div">
+        <h3 th:text="'Executed On : ' + ${executionDate}"></h3>
+    </div>
+</div>
+<div id="exception-container">
+    <div id="bell-icon" onclick="toggleExceptionSlider()">
+        <img src="src/test/resources/Images/bell-icon.png" alt="Bell Icon">
+        <div id="exception-count" th:text="${exceptionCount}">0</div>
+    </div>
+</div>
+<div id="exception-slider">
+    <!-- Notification items will be dynamically added here -->
+    <div class="exception-item" th:each="exception : ${exceptions}" th:text="${exception.customExceptions}"></div>
+</div>
+<div class="info-container">
+    <h2 th:text="'Overall time taken : ' + ${totalTimeTaken} + ' ms'"></h2>
+</div>
+<div class="status-container">
+    <div class="box total-tests" id="totalTestText" th:data-language="${totalStatusCount}">
+        <p class="count" th:id="totalTestCount" th:style="'color: black;'" th:text="${totalTestCount}"></p>
+        <p class="label" th:style="'color: black;'">TOTAL</p>
+    </div>
+    <div class="box passed-tests">
+        <p class="count" th:id="totalPassCount" th:style="'color: black;'" th:text="${totalPassedCount}"></p>
+        <p class="label" th:style="'color: black;'">PASS</p>
+    </div>
+    <div class="box failed-tests">
+        <p class="count" th:id="totalFailedCount" th:style="'color: black;'" th:text="${totalFailedCount}"></p>
+        <p class="label" th:style="'color: black;'">FAIL</p>
+    </div>
+    <div class="box skipped-tests">
+        <p class="count" th:id="totalSkippedCount" th:style="'color: black;'" th:text="${totalSkippedCount}"></p>
+        <p class="label" th:style="'color: black;'">SKIP</p>
+    </div>
+</div>
+<div class="summary-container">
+    <div class="system-info-container">
+        <h4>Summary</h4>
+        <table>
+            <tr>
+                <th>Tester</th>
+                <td th:text="${testerName}"></td>
+            </tr>
+            <tr>
+                <th>Environment</th>
+                <td th:text="${testEnvironment}"></td>
+            </tr>
+            <tr>
+                <th>Browser</th>
+                <td th:text="${browserType}"></td>
+            </tr>
+            <tr>
+                <th>Browser Mode</th>
+                <td th:text="${browserMode}"></td>
+            </tr>
+            <tr>
+                <th>Operating System</th>
+                <td th:text="${osName}"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="status-chart-container">
+        <h4>Execution Timeline</h4>
+        <div class="chart-container" id="chart-container"></div>
+    </div>
+</div>
+<div class="report-container" th:each="result : ${testResults}">
+    <div class="language-container" th:data-language="${result.language}" onclick="toggleTable(this)">
+        <h4>
+            <span th:text="${result.language}"></span>
+            <span class="toggle-arrow">▼</span><!-- Initial arrow (right arrow) -->
+        </h4>
+        <table th:id="'table-' + ${result.language}" th:style="'display: none;'">
+            <thead>
+            <tr>
+                <th>Expected</th>
+                <th>Actual</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${result.expectedValue}"></td>
+                <td th:text="${result.actualValue}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script th:src="@{src/test/resources/JS/report-script.js}"></script>
+<script th:src="@{src/test/resources/JS/chart-script.js}"></script>
+<script th:src="@{src/test/resources/JS/exception-script.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var durationValue = /*[[${durationConfigurations}]]*/ 'default';
+    /*]]>*/
+</script>
+</body>
+</html>
