@@ -28,5 +28,20 @@
             <version>2.16.0</version>
         </dependency>
     </dependencies>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/test/resources</directory>
+                <includes>
+                    <include>CSS/styles.css</include>
+                    <include>HTML/index.html</include>
+                    <include>Images/bell-icon.png</include>
+                    <include>JS/chart-script.js</include>
+                    <include>JS/exception-script.js</include>
+                    <include>JS/report-script.js</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 
 </project>

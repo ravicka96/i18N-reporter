@@ -1,3 +1,6 @@
+package Configurations;
+
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -12,7 +15,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
  *@project i18N-reporter
  */
 public class GenerateReport {
-    public static void generateThymeLeafReport(List<TestResult> testResults, List<DurationConfiguration> durationConfigurations, List<ExceptionConfiguration> customExceptions) {
+    public void generateThymeLeafReport(List<TestResult> testResults, List<DurationConfiguration> durationConfigurations, List<ExceptionConfiguration> customExceptions) {
         int passedCount = 0, failedCount = 0, skippedCount = 0, totalCount = 0;
 
         // Configure Thymeleaf template resolver
@@ -56,11 +59,11 @@ public class GenerateReport {
 
         context.setVariable("durationConfigurations", durationConfigurations);
 
-        String templateName = "report-template";
+        String templateName = "templates/index";
         String html = templateEngine.process(templateName, context);
 
         // Write HTML content to a file
-        try (FileWriter fileWriter = new FileWriter("src/test/resources/HTML/Report.html")) {
+        try (FileWriter fileWriter = new FileWriter(System.getProperty("user.dir")+ File.separator+"Reports/Report.html")) {
             fileWriter.write(html);
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,6 +1,6 @@
 let isSliderOpen = false;
 
-    // Function to toggle the exception slider
+ // Function to toggle the exception slider
 function toggleExceptionSlider() {
         const slider = document.getElementById("exception-slider");
         const bellIcon = document.getElementById("bell-icon");
